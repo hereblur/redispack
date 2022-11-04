@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.sub = exports.pub = void 0;
 const redis_1 = require("./redis");
 const debug_1 = require("debug");
 const debug = (0, debug_1.default)('redisplus');
@@ -15,6 +16,7 @@ const pub = async (key, data) => {
     debug(`publishing ${JSON.stringify(data)}`);
     await __PUBLISHER.publish(key, JSON.stringify(data));
 };
+exports.pub = pub;
 const sub = async (listeners) => {
     debug('Create subscriber...');
     const subscriber = (0, redis_1.newClient)();
@@ -38,8 +40,5 @@ const sub = async (listeners) => {
         }
     };
 };
-module.exports = {
-    pub,
-    sub,
-};
+exports.sub = sub;
 //# sourceMappingURL=pubsub.js.map

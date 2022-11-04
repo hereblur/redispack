@@ -14,7 +14,7 @@ interface Listeners {
 }
 
 let __PUBLISHER: Redis | null = null;
-const pub = async (key: string, data: unknown) => {
+export const pub = async (key: string, data: unknown) => {
   if (!__PUBLISHER) {
     debug('Create publisher...');
     __PUBLISHER = await newClient();
@@ -26,7 +26,7 @@ const pub = async (key: string, data: unknown) => {
   await __PUBLISHER.publish(key, JSON.stringify(data));
 };
 
-const sub = async (listeners: Listeners) => {
+export const sub = async (listeners: Listeners) => {
   debug('Create subscriber...');
   const subscriber = newClient();
 
@@ -53,9 +53,4 @@ const sub = async (listeners: Listeners) => {
       subscriber.unsubscribe(key);
     }
   };
-};
-
-module.exports = {
-  pub,
-  sub,
 };
